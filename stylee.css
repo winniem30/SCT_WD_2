@@ -73,4 +73,5 @@ body {
 
 .buttons button:hover {
     background: linear-gradient(135deg, #ff79a1, #ff4081);
-    transfo
+    transform: scale(1);
+}
