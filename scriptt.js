@@ -1,50 +1,45 @@
-let timer;
-let running = false;
-let seconds = 0, minutes = 0, hours = 0;
+let startTime;
+let elapsedTime = 0;
+let timerInterval;
 
-function startStopwatch() {
-    if (!running) {
-        running = true;
-        timer = setInterval(updateTime, 1000);
-        document.getElementById("runner").style.animation = "running 0.5s infinite alternate";
-    }
-}
+const display = document.querySelector('.display');
+const startButton = document.getElementById('start');
+const stopButton = document.getElementById('stop');
+const resetButton = document.getElementById('reset');
 
-function pauseStopwatch() {
-    running = false;
-    clearInterval(timer);
-    document.getElementById("runner").style.animation = "idle 1s infinite alternate";
-}
+function formatTime(milliseconds) {
+  let hours = Math.floor(milliseconds / 3600000);
+  let minutes = Math.floor((milliseconds % 3600000) / 60000);
+  let seconds = Math.floor((milliseconds % 60000) / 1000);
+  let ms = Math.floor((milliseconds % 1000) / 10);
 
-function resetStopwatch() {
-    running = false;
-    clearInterval(timer);
-    seconds = 0;
-    minutes = 0;
-    hours = 0;
-    document.getElementById("display").innerText = "00:00:00";
-    document.getElementById("laps").innerHTML = "";
-    document.getElementById("runner").style.animation = "idle 1s infinite alternate";
+  return (
+    String(hours).padStart(2, '0') +
+    ':' +
+    String(minutes).padStart(2, '0') +
+    ':' +
+    String(seconds).padStart(2, '0')
+  );
 }
 
-function updateTime() {
-    seconds++;
-    if (seconds === 60) {
-        seconds = 0;
-        minutes++;
-    }
-    if (minutes === 60) {
-        minutes = 0;
-        hours++;
-    }
-    document.getElementById("display").innerText = 
-        (hours < 10 ? "0" : "") + hours + ":" +
-        (minutes < 10 ? "0" : "") + minutes + ":" +
-        (seconds < 10 ? "0" : "") + seconds;
+function startTimer() {
+  startTime = Date.now() - elapsedTime;
+  timerInterval = setInterval(function () {
+    elapsedTime = Date.now() - startTime;
+    display.textContent = formatTime(elapsedTime);
+  }, 10);
 }
-function recordLap() {
-    let lapTime = document.getElementById("display").innerText;
-    let lapItem = document.createElement("li");
-    lapItem.innerText = `🏅 Lap: ${lapTime}`;
-    document.getElementById("laps").appendChild(lapItem);
+
+function stopTimer() {
+  clearInterval(timerInterval);
 }
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  elapsedTime = 0;
+  display.textContent = '00:00:00';
+}
+
+startButton.addEventListener('click', startTimer);
+stopButton.addEventListener('click', stopTimer);
+resetButton.addEventListener('click', resetTimer);

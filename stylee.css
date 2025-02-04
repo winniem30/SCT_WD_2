@@ -1,77 +1,55 @@
-/* 🎨 Vibrant Background */
 body {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    text-align: center;
-    background: radial-gradient(circle, #ff9a9e, #fad0c4, #fbc2eb);
-    color: white;
-    height: 100vh;
+    font-family: Arial, sans-serif;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
     margin: 0;
-}
-
-/* 📌 Centered Stopwatch Box */
-.container {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .stopwatch-container {
     text-align: center;
-    width: 50%;
-    min-width: 350px;
-    animation: fadeIn 1s ease-in-out;
-}
-
-/* 🏃‍♂️ Runner Animation */
-#runner {
-    width: 80px;
-    display: block;
-    margin: auto;
-    animation: idle 1s infinite alternate;
-}
-
-@keyframes idle {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(10px);
-    }
-}
-
-@keyframes running {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(30px);
-    }
-}
-
-/* ⏳ Stopwatch Display */
-.stopwatch {
-    font-size: 2.5em;
-    color: #ff4081;
-    font-weight: bold;
-    margin: 20px;
-}
-
-/* 🎭 Vibrant Buttons */
-.buttons button {
-    font-size: 22px;
-    padding: 12px 25px;
-    margin: 10px;
-    cursor: pointer;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .display {
+    font-size: 3rem;
+    margin: 20px 0;
+    color: #333;
+  }
+  
+  .controls button {
+    font-size: 1rem;
+    padding: 10px 20px;
+    margin: 5px;
     border: none;
-    background: linear-gradient(135deg, #ff4081, #ff79a1);
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
     color: white;
-    border-radius: 15px;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.buttons button:hover {
-    background: linear-gradient(135deg, #ff79a1, #ff4081);
-    transform: scale(1);
-}
+    transition: background-color 0.3s;
+  }
+  
+  .controls button:hover {
+    background-color: #0056b3;
+  }
+  
+  #stop {
+    background-color: #dc3545;
+  }
+  
+  #stop:hover {
+    background-color: #a71d2a;
+  }
+  
+  #reset {
+    background-color: #6c757d;
+  }
+  
+  #reset:hover {
+    background-color: #5a6268;
+  }
