@@ -1,45 +1,52 @@
-let startTime;
-let elapsedTime = 0;
-let timerInterval;
+let startStopButton = document.getElementById('startStop');
+let display = document.getElementById('display');
+let timer;
+let isRunning = false;
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+let lapTimes = [];
 
-const display = document.querySelector('.display');
-const startButton = document.getElementById('start');
-const stopButton = document.getElementById('stop');
-const resetButton = document.getElementById('reset');
-
-function formatTime(milliseconds) {
-  let hours = Math.floor(milliseconds / 3600000);
-  let minutes = Math.floor((milliseconds % 3600000) / 60000);
-  let seconds = Math.floor((milliseconds % 60000) / 1000);
-  let ms = Math.floor((milliseconds % 1000) / 10);
-
-  return (
-    String(hours).padStart(2, '0') +
-    ':' +
-    String(minutes).padStart(2, '0') +
-    ':' +
-    String(seconds).padStart(2, '0')
-  );
+function startStop() {
+    if (isRunning) {
+        clearInterval(timer);
+        startStopButton.textContent = "Start";
+    } else {
+        timer = setInterval(updateTime, 1000);
+        startStopButton.textContent = "Stop";
+    }
+    isRunning = !isRunning;
 }
 
-function startTimer() {
-  startTime = Date.now() - elapsedTime;
-  timerInterval = setInterval(function () {
-    elapsedTime = Date.now() - startTime;
-    display.textContent = formatTime(elapsedTime);
-  }, 10);
+function updateTime() {
+    seconds++;
+    if (seconds == 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes == 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+    display.textContent = formatTime(hours, minutes, seconds);
 }
 
-function stopTimer() {
-  clearInterval(timerInterval);
+function formatTime(hours, minutes, seconds) {
+    return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
 }
 
-function resetTimer() {
-  clearInterval(timerInterval);
-  elapsedTime = 0;
-  display.textContent = '00:00:00';
+function padZero(timeUnit) {
+    return timeUnit < 10 ? `0${timeUnit}` : timeUnit;
 }
 
-startButton.addEventListener('click', startTimer);
-stopButton.addEventListener('click', stopTimer);
-resetButton.addEventListener('click', resetTimer);
+function reset() {
+    clearInterval(timer);
+    isRunning = false;
+    hours = 0;
+    minutes = 0;
+    seconds = 0;
+    display.textContent = "00:00:00";
+    startStopButton.textContent = "Start";
+    lapTimes = [];
+    document.getElementById('lapList').innerHTML = '';
+}
